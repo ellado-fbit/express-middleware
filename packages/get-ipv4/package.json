@@ -1,0 +1,7 @@
+{
+  "name": "@fbit-express-middleware/get-ipv4",
+  "version": "1.0.0",
+  "description": "Express middleware to extract the IPv4 address from the request object.",
+  "main": "index.js",
+  "author": "Esteve Lladó <ellado@fundaciobit.org>"
+}
