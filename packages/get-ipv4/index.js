@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
     req.ipv4 = clientIp
     next()
   } else {
-    return res.status(400).json({ error: 'IP address not detected' })
+    return res.status(400).json({ error: 'IP address not detected as a string type' })
   }
 
 }
