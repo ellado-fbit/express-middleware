@@ -19,10 +19,12 @@ const client = redis.createClient({ db: REDIS_DB_INDEX })
 
 const app = express()
 
-app.get('/username/:username', redisGet({ client, key: 'req.params.username' }), (req, res) => {
-  const username = res.locals.redisValue ? JSON.parse(res.locals.redisValue) : {}
-  res.json(username)
-})
+app.get('/username/:username',
+  redisGet({ client, key: 'req.params.username' }),
+  (req, res) => {
+    const userData = res.locals.redisValue ? JSON.parse(res.locals.redisValue) : {}
+    res.json(userData)
+  })
 
 const port = 3000
 app.listen(port, () => { console.log(`Server running on port ${port}...`) })
