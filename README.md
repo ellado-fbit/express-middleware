@@ -1,6 +1,6 @@
 A useful collection of Express middlewares.
 
-## Installing
+## Install
 
 ```bash
 npm install @fundaciobit/express-middleware
