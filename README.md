@@ -1,4 +1,4 @@
-A useful collection of express middlewares.
+A useful collection of Express middlewares.
 
 ## Installing
 
