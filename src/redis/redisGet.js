@@ -2,7 +2,7 @@
 
 // Middleware wrapper for the Redis GET command.
 // Get the value of a key from the Redis cache.
-// Returned value will be available on 'req.locals.redisValue'.
+// Returned value will be available on 'res.locals.redisValue'.
 
 const redisGet = (redisClient, key) => {
   return (req, res, next) => {
@@ -10,9 +10,9 @@ const redisGet = (redisClient, key) => {
       redisClient.get(key, (error, value) => {
         if (!error) {
           if (value) {
-            req.locals.redisValue = JSON.parse(value)
+            res.locals.redisValue = JSON.parse(value)
           } else {
-            req.locals.redisValue = null
+            res.locals.redisValue = null
           }
           next()
         } else {
