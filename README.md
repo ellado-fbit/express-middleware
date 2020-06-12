@@ -19,14 +19,9 @@ const client = redis.createClient({ db: REDIS_DB_INDEX })
 
 const app = express()
 
-app.get('/', redisGet(client, 'username'), (req, res) => {  // Get value of 'username' key from Redis
-  const username = res.locals.redisValue
-
-  if (!username) {
-    res.status(404).json({ error: 'Key not found in Redis cache' })
-  } else {
-    res.status(200).json(username)  // JSON parsed value returned
-  }
+app.get('/username/:username', redisGet({ client, key: 'req.params.username' }), (req, res) => {
+  const username = res.locals.redisValue ? JSON.parse(res.locals.redisValue) : {}
+  res.json(username)
 })
 
 const port = 3000
@@ -46,7 +41,8 @@ const app = express()
 app.use(ipv4())
 
 app.get('/ip', (req, res) => {
-  res.status(200).json({ ip: req.ipv4 })
+  const { ipv4 } = req
+  res.json({ ipv4 })
 })
 
 const port = 3000

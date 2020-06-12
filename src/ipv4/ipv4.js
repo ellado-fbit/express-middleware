@@ -12,7 +12,7 @@ const ipv4 = () => {
       req.ipv4 = ipv4
       next()
     } else {
-      return res.status(400).json({ error: 'IP address not detected as a string type' })
+      return res.status(400).json({ error: '[ipv4] IP address not detected as a string type' })
     }
   }
 }
