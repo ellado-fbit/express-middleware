@@ -7,8 +7,8 @@
 const redisGet = (props) => {
   return (req, res, next) => {
 
-    const { client } = props
-    let { key } = props
+    const client = props.client
+    let key = props.key
 
     if (typeof(key) !== 'string') {
       return res.status(400).json({ error: '[redisGet] \'key\' parameter must be a string' })
