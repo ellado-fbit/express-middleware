@@ -1,9 +1,13 @@
 {
   "name": "@fundaciobit/express-middleware",
-  "version": "1.0.0",
-  "description": "Useful express middleware.",
+  "version": "1.0.1",
+  "description": "A useful collection of express middlewares.",
   "author": "Esteve Lladó <ellado@fundaciobit.org>",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ellado-fbit/express-middleware"
+  },
   "engines": {
     "node": ">=4.6.0"
   }
