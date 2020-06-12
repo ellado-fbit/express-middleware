@@ -19,9 +19,7 @@ const client = redis.createClient({ db: REDIS_DB_INDEX })
 
 const app = express()
 
-app.use(redisGet(client, 'username'))
-
-app.get('/', (req, res) => {
+app.get('/', redisGet(client, 'username'), (req, res) => {  // Get value of 'username' key from Redis
   const username = res.locals.redisValue
 
   if (!username) {
