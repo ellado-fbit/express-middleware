@@ -7,7 +7,7 @@ npm install @fundaciobit/express-middleware
 ```
 
 ## IPv4
-Middleware to extract the IPv4 address from the request object. The extracted IPv4 address will be available on the request via the 'ipv4' property. Also converts IPv6 format to IPv4 format.
+Middleware to extract the IPv4 address from the request object (it converts IPv6 format to IPv4 format). The extracted address will be available on the request via the 'ipv4' property.
 
 ```js
 const express = require('express')
