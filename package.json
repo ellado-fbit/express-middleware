@@ -1,5 +1,6 @@
 {
   "name": "fbit-express-middleware",
+  "private": true,
   "devDependencies": {
     "lerna": "^3.22.0"
   }

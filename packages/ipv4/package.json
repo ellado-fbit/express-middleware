@@ -3,5 +3,6 @@
   "version": "1.0.3",
   "description": "Express middleware to extract the IPv4 address from the request object.",
   "author": "Esteve Lladó <ellado@fundaciobit.org>",
-  "main": "index.js"
+  "main": "index.js",
+  "gitHead": "3ec2d6e139053ce88069ec7e12e39350a53d729f"
 }
