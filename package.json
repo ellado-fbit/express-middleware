@@ -1,7 +1,10 @@
 {
-  "name": "fbit-express-middleware",
-  "private": true,
-  "devDependencies": {
-    "lerna": "^3.22.0"
+  "name": "@fundaciobit/express-middleware",
+  "version": "1.0.0",
+  "description": "Useful express middleware.",
+  "author": "Esteve Lladó <ellado@fundaciobit.org>",
+  "main": "index.js",
+  "engines": {
+    "node": ">=4.6.0"
   }
 }
