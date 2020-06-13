@@ -7,12 +7,22 @@
 const redisGet = (props) => {
   return (req, res, next) => {
 
-    const client = props.client
-    let key = props.key
+    // Checking props (props = { client: redisClient, key: redisKey })
 
-    if (typeof(key) !== 'string') {
+    if (!props.client) {
+      return res.status(400).json({ error: '[redisGet] \'client\' parameter is required' })
+    }
+
+    if (!props.key) {
+      return res.status(400).json({ error: '[redisGet] \'key\' parameter is required' })
+    }
+
+    if (typeof(props.key) !== 'string') {
       return res.status(400).json({ error: '[redisGet] \'key\' parameter must be a string' })
     }
+
+    const client = props.client
+    let key = props.key
 
     let fields = key.split('.')
 
