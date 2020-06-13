@@ -36,14 +36,15 @@ const redisGet = (props) => {
       }
     }
 
-    client.get(key, (error, value) => {
-      if (!error) {
+    try {
+      client.get(key, (err, value) => {
+        if (err) throw err
         res.locals.redisValue = value
         next()
-      } else {
-        return res.status(500).json({ error: error.message })
-      }
-    })
+      })
+    } catch(error) {
+      return res.status(500).json({ error: error.message })
+    }
 
   }
 }
