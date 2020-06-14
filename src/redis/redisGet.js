@@ -22,12 +22,24 @@ const redisGet = (props) => {
     try {
       client.get(key(req), (err, value) => {
         if (err) throw err
+
         if (value) {
-          res.locals.redisValue = parseResults ? JSON.parse(value) : value
+          if (parseResults) {
+
+            try {
+              res.locals.redisValue = JSON.parse(value)
+            } catch (error) {
+              return res.status(500).json({ error: `[redisGet] ${error.message}` })
+            }
+
+          } else {
+            res.locals.redisValue = value
+          }
         }
+
         next()
       })
-    } catch(error) {
+    } catch (error) {
       return res.status(500).json({ error: `[redisGet] ${error.message}` })
     }
 
