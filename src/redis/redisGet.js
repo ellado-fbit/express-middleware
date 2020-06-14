@@ -29,7 +29,7 @@ const redisGet = (props) => {
             try {
               res.locals.redisValue = JSON.parse(value)
             } catch (error) {
-              return res.status(500).json({ error: `[redisGet] ${error.message}` })
+              return res.status(500).json({ error: `[redisGet] Error when parsing the value obtained from Redis: ${error.message}` })
             }
 
           } else {
