@@ -20,13 +20,21 @@ const client = redis.createClient({ db: REDIS_DB_INDEX })
 const app = express()
 
 app.get('/username/esteve',
-  redisGet({ client, key: (req) => req.path }),
+  redisGet({
+    client,
+    key: (req) => req.path,
+    parseResults: true
+  }),
   (req, res) => {
     res.json(res.locals.redisValue)
   })
 
 app.get('/username/:username',
-  redisGet({ client, key: (req) => req.params.username }),
+  redisGet({
+    client,
+    key: (req) => req.params.username,
+    parseResults: true
+  }),
   (req, res) => {
     res.json(res.locals.redisValue)
   })
