@@ -7,7 +7,7 @@ npm install @fundaciobit/express-middleware
 ```
 
 ## Redis GET command
-Middleware wrapper for the Redis GET command. Get the value of a key from the Redis cache. Returned value will be available on 'res.locals.redisValue'.
+Middleware wrapper for the Redis GET command. Get the value of a key from the Redis cache. Returned value is available via `res.locals.redisValue` by default.
 
 ```js
 const express = require('express')
@@ -22,21 +22,24 @@ const app = express()
 app.get('/username/esteve',
   redisGet({
     client,
-    key: (req) => req.path,
-    parseResults: true
+    key: (req) => req.path
   }),
   (req, res) => {
-    res.json(res.locals.redisValue)
+    const { redisValue } = res.locals
+    if (redisValue) return res.status(200).send(redisValue)
+    res.status(404).send('Not found')
   })
 
 app.get('/username/:username',
   redisGet({
     client,
-    key: (req) => req.params.username,
-    parseResults: true
+    key: (req) => req.params.username
+    resultProperty: 'cachedData'
   }),
   (req, res) => {
-    res.json(res.locals.redisValue)
+    const { cachedData } = res.locals
+    if (cachedData) return res.status(200).send(cachedData)
+    res.status(404).send('Not found')
   })
 
 const port = 3000
@@ -45,7 +48,7 @@ app.listen(port, () => { console.log(`Server running on port ${port}...`) })
 ```
 
 ## IPv4
-Middleware to extract the IPv4 address from the request object (it converts IPv6 format to IPv4 format). The extracted address will be available on the request via the 'ipv4' property.
+Middleware to extract the IPv4 address from the request object (it converts IPv6 format to IPv4 format). The extracted address will be available on the request via the `ipv4` property.
 
 ```js
 const express = require('express')

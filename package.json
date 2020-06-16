@@ -4,6 +4,9 @@
   "description": "A useful collection of Express middlewares.",
   "author": "Esteve Lladó <ellado@fundaciobit.org>",
   "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ellado-fbit/express-middleware.git"
@@ -19,14 +22,13 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^7.2.0"
+    "eslint": "^7.2.0",
+    "jest": "^26.0.1",
+    "redis": "^3.0.2"
   },
   "bugs": {
     "url": "https://github.com/ellado-fbit/express-middleware/issues"
   },
   "homepage": "https://github.com/ellado-fbit/express-middleware#readme",
-  "dependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  }
+  "dependencies": {}
 }

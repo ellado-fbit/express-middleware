@@ -2,45 +2,50 @@
 
 // Middleware wrapper for the Redis GET command.
 // Get the value of a key from the Redis cache.
-// Returned value will be available on 'res.locals.redisValue'.
+// Returned value will be available on 'res.locals.redisValue' by default.
 
 const redisGet = (props) => {
   return (req, res, next) => {
 
     const client = props.client
     const key = props.key
-    const parseResults = props.parseResults
-
-    if (!client) {
-      return res.status(400).json({ error: '[redisGet] \'client\' parameter is required' })
-    }
-
-    if (!key) {
-      return res.status(400).json({ error: '[redisGet] \'key\' parameter is required' })
-    }
+    let resultProperty = props.resultProperty
 
     try {
+
+      if (!client) {
+        const error = Error('\'client\' parameter is required')
+        throw error
+      }
+
+      if (!key) {
+        const error = Error('\'key\' parameter is required')
+        throw error
+      }
+
+      if (typeof(key(req)) !== 'string') {
+        const error = Error('\'key\' function parameter must return a string')
+        throw error
+      }
+
+      if (resultProperty && typeof(resultProperty) !== 'string') {
+        const error = Error('\'resultProperty\' parameter must be string')
+        throw error
+      }
+
       client.get(key(req), (err, value) => {
         if (err) throw err
 
         if (value) {
-          if (parseResults) {
-
-            try {
-              res.locals.redisValue = JSON.parse(value)
-            } catch (error) {
-              return res.status(500).json({ error: `[redisGet] Error when parsing the value obtained from Redis: ${error.message}` })
-            }
-
-          } else {
-            res.locals.redisValue = value
-          }
+          if (!resultProperty) resultProperty = 'redisValue'
+          res.locals[resultProperty] = value
         }
 
         next()
       })
     } catch (error) {
-      return res.status(500).json({ error: `[redisGet] ${error.message}` })
+      error.message = `[redisGet] ${error.message}`
+      next(error)
     }
 
   }
