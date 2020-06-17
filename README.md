@@ -43,6 +43,10 @@ app.get('/username/:username',
     res.status(404).send('Not found')
   })
 
+app.use((err, req, res, next) => {
+  res.status(500).send(`Error: ${err.message}`)
+})
+
 const port = 3000
 app.listen(port, () => { console.log(`Server running on port ${port}...`) })
 

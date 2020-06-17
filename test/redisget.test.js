@@ -73,6 +73,16 @@ describe('Testing redisGet middleware...', () => {
     })
   })
 
+  // test(`(Check error) extracted value is not a valid JSON format (error in JSON.parse)`, done => {
+  //   const req = { key: 'juan' }
+  //   const res = { locals: {} }
+  //   const middleware = redisGet({ client, key: (req) => req.key, parseResults: true })
+  //   middleware(req, res, err => {
+  //     expect(err).toBeDefined()
+  //     done()
+  //   })
+  // })
+
   test(`Get value of existing key`, done => {
     const req = { key: 'carlitos' }
     const res = { locals: {} }

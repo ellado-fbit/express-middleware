@@ -1,6 +1,6 @@
 {
   "name": "@fundaciobit/express-middleware",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "A useful collection of Express middlewares.",
   "author": "Esteve Lladó <ellado@fundaciobit.org>",
   "main": "index.js",
@@ -15,6 +15,7 @@
     "express",
     "middleware",
     "ip-address",
+    "ipv4",
     "redis"
   ],
   "engines": {
