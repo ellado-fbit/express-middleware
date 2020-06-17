@@ -7,13 +7,21 @@ const ipv4 = () => {
   return (req, res, next) => {
     let ipv4 = req.ip
 
-    if (typeof(ipv4) === 'string') {
+    try {
+      if (typeof(ipv4) !== 'string') {
+        const error = Error('IP address not detected as a string type')
+        throw error
+      }
+
       ipv4 = ipv4.replace('::ffff:', '').replace('::1', '127.0.0.1')
       req.ipv4 = ipv4
       next()
-    } else {
-      return res.status(400).json({ error: '[ipv4] IP address not detected as a string type' })
+
+    } catch (error) {
+      error.message = `[ipv4] ${error.message}`
+      next(error)
     }
+
   }
 }
 

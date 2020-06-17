@@ -10,7 +10,7 @@ const redisGet = (props) => {
     const client = props.client
     const key = props.key
     const parseResults = props.parseResults
-    let responseProperty = props.responseProperty
+    const responseProperty = props.responseProperty
 
     try {
 
