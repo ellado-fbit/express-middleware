@@ -66,8 +66,12 @@ const redisSet = (props) => {
       }
 
       client.set(key(req), value(req, res), 'EX', expiration, (err) => {
-        if (err) throw err
-        next()
+        if (err) {
+          err.message = `[redisSet] ${err.message}`
+          next(err)
+        } else {
+          next()
+        }
       })
 
     } catch (error) {

@@ -68,6 +68,10 @@ app.get('/ip', (req, res) => {
   res.json({ ipv4 })
 })
 
+app.use((err, req, res, next) => {
+  res.status(500).send(`Error: ${err.message}`)
+})
+
 const port = 3000
 app.listen(port, () => { console.log(`Server running on port ${port}...`) })
 
