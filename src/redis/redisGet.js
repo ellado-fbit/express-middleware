@@ -9,7 +9,8 @@ const redisGet = (props) => {
 
     const client = props.client
     const key = props.key
-    let resultProperty = props.resultProperty
+    const parseResults = props.parseResults
+    let responseProperty = props.responseProperty
 
     try {
 
@@ -23,13 +24,23 @@ const redisGet = (props) => {
         throw error
       }
 
+      if (typeof(key) !== 'function') {
+        const error = Error('\'key\' parameter must be a function that accepts req object as parameter')
+        throw error
+      }
+
       if (typeof(key(req)) !== 'string') {
         const error = Error('\'key\' function parameter must return a string')
         throw error
       }
 
-      if (resultProperty && typeof(resultProperty) !== 'string') {
-        const error = Error('\'resultProperty\' parameter must be string')
+      if (parseResults && typeof(parseResults) !== 'boolean') {
+        const error = Error('\'parseResults\' parameter must be boolean')
+        throw error
+      }
+
+      if (responseProperty && typeof(responseProperty) !== 'string') {
+        const error = Error('\'responseProperty\' parameter must be string')
         throw error
       }
 
@@ -37,12 +48,12 @@ const redisGet = (props) => {
         if (err) throw err
 
         if (value) {
-          if (!resultProperty) resultProperty = 'redisValue'
-          res.locals[resultProperty] = value
+          res.locals[responseProperty ? responseProperty : 'redisValue'] = parseResults ? JSON.parse(value) : value
         }
 
         next()
       })
+
     } catch (error) {
       error.message = `[redisGet] ${error.message}`
       next(error)

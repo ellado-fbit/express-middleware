@@ -11,47 +11,68 @@ const redisSet = (props) => {
     const value = props.value
     const expiration = props.expiration
 
-    const errRequiredMsg = (param) => `[redisSet] '${param}' parameter is required`
-
-    if (!client) {
-      return res.status(400).json({ error: errRequiredMsg('client') })
-    }
-
-    if (!key) {
-      return res.status(400).json({ error: errRequiredMsg('key') })
-    }
-
-    if (!value) {
-      return res.status(400).json({ error: errRequiredMsg('value') })
-    }
-
-    if (!expiration) {
-      return res.status(400).json({ error: errRequiredMsg('expiration') })
-    }
-
-    if (typeof(key(req)) !== 'string') {
-      return res.status(400).json({ error: '[redisSet] \'key\' function parameter must return a string' })
-    }
-
-    if (typeof(value(req, res)) !== 'string') {
-      return res.status(400).json({ error: '[redisSet] \'value\' function parameter must return a string' })
-    }
-
-    if (!Number.isInteger(expiration)) {
-      return res.status(400).json({ error: `[redisSet] 'expiration' parameter must be integer` })
-    }
-
-    if (expiration <= 0) {
-      return res.status(400).json({ error: `[redisSet] 'expiration' parameter must be greater than zero` })
-    }
+    const errRequiredMsg = (param) => `'${param}' parameter is required`
 
     try {
+
+      if (!client) {
+        const error = Error(errRequiredMsg('client'))
+        throw error
+      }
+
+      if (!key) {
+        const error = Error(errRequiredMsg('key'))
+        throw error
+      }
+
+      if (!value) {
+        const error = Error(errRequiredMsg('value'))
+        throw error
+      }
+
+      if (!expiration) {
+        const error = Error(errRequiredMsg('expiration'))
+        throw error
+      }
+
+      if (typeof(key) !== 'function') {
+        const error = Error('\'key\' parameter must be a function that accepts req object as parameter')
+        throw error
+      }
+
+      if (typeof(key(req)) !== 'string') {
+        const error = Error('\'key\' function parameter must return a string')
+        throw error
+      }
+
+      if (typeof(value) !== 'function') {
+        const error = Error('\'value\' parameter must be a function that accepts req and res objects as parameter')
+        throw error
+      }
+
+      if (typeof(value(req, res)) !== 'string') {
+        const error = Error('\'value\' function parameter must return a string')
+        throw error
+      }
+
+      if (!Number.isInteger(expiration)) {
+        const error = Error(`'expiration' parameter must be integer`)
+        throw error
+      }
+
+      if (expiration <= 0) {
+        const error = Error(`'expiration' parameter must be greater than zero`)
+        throw error
+      }
+
       client.set(key(req), value(req, res), 'EX', expiration, (err) => {
         if (err) throw err
         next()
       })
+
     } catch (error) {
-      return res.status(500).json({ error: `[redisSet] ${error.message}` })
+      error.message = `[redisSet] ${error.message}`
+      next(error)
     }
 
   }

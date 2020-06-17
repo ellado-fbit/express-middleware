@@ -22,11 +22,12 @@ const app = express()
 app.get('/username/esteve',
   redisGet({
     client,
-    key: (req) => req.path
+    key: (req) => req.path,
+    parseResults: true
   }),
   (req, res) => {
     const { redisValue } = res.locals
-    if (redisValue) return res.status(200).send(redisValue)
+    if (redisValue) return res.status(200).json(redisValue)
     res.status(404).send('Not found')
   })
 
@@ -34,7 +35,7 @@ app.get('/username/:username',
   redisGet({
     client,
     key: (req) => req.params.username
-    resultProperty: 'cachedData'
+    responseProperty: 'cachedData'
   }),
   (req, res) => {
     const { cachedData } = res.locals
