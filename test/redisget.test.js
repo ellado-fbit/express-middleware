@@ -13,30 +13,6 @@ describe('Testing redisGet middleware...', () => {
     client.quit()
   })
 
-  test(`Get value of existing key`, done => {
-    const req = { key: 'carlitos' }
-    const res = { locals: {} }
-    const middleware = redisGet({ client, key: (req) => req.key })
-    // eslint-disable-next-line no-unused-vars
-    middleware(req, res, err => {
-      expect(JSON.parse(res.locals.redisValue).name).toBe('carlitos')
-      expect(err).toBeUndefined()
-      done()
-    })
-  })
-
-  test(`Set parameter responseProperty: 'result'`, done => {
-    const req = { key: 'carlitos' }
-    const res = { locals: {} }
-    const middleware = redisGet({ client, key: (req) => req.key, responseProperty: 'result' })
-    // eslint-disable-next-line no-unused-vars
-    middleware(req, res, err => {
-      expect(JSON.parse(res.locals.result).name).toBe('carlitos')
-      expect(err).toBeUndefined()
-      done()
-    })
-  })
-
   test(`(Check error) Redis client not specified`, done => {
     const req = { key: 'carlitos' }
     const res = { locals: {} }
@@ -93,6 +69,30 @@ describe('Testing redisGet middleware...', () => {
     const middleware = redisGet({ client, key: (req) => req.key, parseResults: 100 })
     middleware(req, res, err => {
       expect(err).toBeDefined()
+      done()
+    })
+  })
+
+  test(`Get value of existing key`, done => {
+    const req = { key: 'carlitos' }
+    const res = { locals: {} }
+    const middleware = redisGet({ client, key: (req) => req.key })
+    // eslint-disable-next-line no-unused-vars
+    middleware(req, res, err => {
+      expect(JSON.parse(res.locals.redisValue).name).toBe('carlitos')
+      expect(err).toBeUndefined()
+      done()
+    })
+  })
+
+  test(`Set parameter responseProperty to 'result'`, done => {
+    const req = { key: 'carlitos' }
+    const res = { locals: {} }
+    const middleware = redisGet({ client, key: (req) => req.key, responseProperty: 'result' })
+    // eslint-disable-next-line no-unused-vars
+    middleware(req, res, err => {
+      expect(JSON.parse(res.locals.result).name).toBe('carlitos')
+      expect(err).toBeUndefined()
       done()
     })
   })

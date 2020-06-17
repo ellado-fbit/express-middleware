@@ -34,7 +34,7 @@ app.get('/username/esteve',
 app.get('/username/:username',
   redisGet({
     client,
-    key: (req) => req.params.username
+    key: (req) => req.params.username,
     responseProperty: 'cachedData'
   }),
   (req, res) => {
