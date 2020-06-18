@@ -9,8 +9,7 @@ const ipv4 = () => {
 
     try {
       if (typeof(ipv4) !== 'string') {
-        const error = Error('IP address not detected as a string type')
-        throw error
+        throw new Error('IP address not detected as a string type')
       }
 
       ipv4 = ipv4.replace('::ffff:', '').replace('::1', '127.0.0.1')

@@ -16,53 +16,43 @@ const redisSet = (props) => {
     try {
 
       if (!client) {
-        const error = Error(errRequiredMsg('client'))
-        throw error
+        throw new Error(errRequiredMsg('client'))
       }
 
       if (!key) {
-        const error = Error(errRequiredMsg('key'))
-        throw error
+        throw new Error(errRequiredMsg('key'))
       }
 
       if (!value) {
-        const error = Error(errRequiredMsg('value'))
-        throw error
+        throw new Error(errRequiredMsg('value'))
       }
 
       if (!expiration) {
-        const error = Error(errRequiredMsg('expiration'))
-        throw error
+        throw new Error(errRequiredMsg('expiration'))
       }
 
       if (typeof(key) !== 'function') {
-        const error = Error('\'key\' parameter must be a function that accepts req object as parameter')
-        throw error
+        throw new Error('\'key\' parameter must be a function that accepts req object as parameter')
       }
 
       if (typeof(key(req)) !== 'string') {
-        const error = Error('\'key\' function parameter must return a string')
-        throw error
+        throw new Error('\'key\' function parameter must return a string')
       }
 
       if (typeof(value) !== 'function') {
-        const error = Error('\'value\' parameter must be a function that accepts req and res objects as parameter')
-        throw error
+        throw new Error('\'value\' parameter must be a function that accepts req and res objects as parameter')
       }
 
       if (typeof(value(req, res)) !== 'string') {
-        const error = Error('\'value\' function parameter must return a string')
-        throw error
+        throw new Error('\'value\' function parameter must return a string')
       }
 
       if (!Number.isInteger(expiration)) {
-        const error = Error(`'expiration' parameter must be integer`)
-        throw error
+        throw new Error(`'expiration' parameter must be integer`)
       }
 
       if (expiration <= 0) {
-        const error = Error(`'expiration' parameter must be greater than zero`)
-        throw error
+        throw new Error(`'expiration' parameter must be greater than zero`)
       }
 
       client.set(key(req), value(req, res), 'EX', expiration, (err) => {

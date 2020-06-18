@@ -15,33 +15,27 @@ const redisGet = (props) => {
     try {
 
       if (!client) {
-        const error = Error('\'client\' parameter is required')
-        throw error
+        throw new Error('\'client\' parameter is required')
       }
 
       if (!key) {
-        const error = Error('\'key\' parameter is required')
-        throw error
+        throw new Error('\'key\' parameter is required')
       }
 
       if (typeof(key) !== 'function') {
-        const error = Error('\'key\' parameter must be a function that accepts req object as parameter')
-        throw error
+        throw new Error('\'key\' parameter must be a function that accepts req object as parameter')
       }
 
       if (typeof(key(req)) !== 'string') {
-        const error = Error('\'key\' function parameter must return a string')
-        throw error
+        throw new Error('\'key\' function parameter must return a string')
       }
 
       if (parseResults && typeof(parseResults) !== 'boolean') {
-        const error = Error('\'parseResults\' parameter must be boolean')
-        throw error
+        throw new Error('\'parseResults\' parameter must be boolean')
       }
 
       if (responseProperty && typeof(responseProperty) !== 'string') {
-        const error = Error('\'responseProperty\' parameter must be string')
-        throw error
+        throw new Error('\'responseProperty\' parameter must be string')
       }
 
       client.get(key(req), (err, value) => {

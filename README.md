@@ -1,4 +1,13 @@
-A useful collection of Express middlewares.
+A useful collection of Express middleware wrappers for Redis and MongoDB.
+
+## Middlewares
+
+| middleware    | description                                           |
+|---------------|-------------------------------------------------------|
+| redisGet      | Get the value of a key from Redis cache.              |
+| redisSet      | Set the string value of a key to Redis cache.         |
+| mongoFind     | `pending`                                             |
+| ipv4          | Extracts IP address and converts IPv6 format to IPv4. |
 
 ## Install
 
@@ -41,6 +50,40 @@ app.get('/username/:username',
     const { cachedData } = res.locals
     if (cachedData) return res.status(200).send(cachedData)
     res.status(404).send('Not found')
+  })
+
+app.use((err, req, res, next) => {
+  res.status(500).send(`Error: ${err.message}`)
+})
+
+const port = 3000
+app.listen(port, () => { console.log(`Server running on port ${port}...`) })
+
+```
+
+## Redis SET command
+Middleware wrapper for the Redis SET command. Set the string value of a key.
+
+```js
+const express = require('express')
+const redis = require('redis')
+const { redisSet } = require('@fundaciobit/express-middleware')
+
+const REDIS_DB_INDEX = 0
+const client = redis.createClient({ db: REDIS_DB_INDEX })
+
+const app = express()
+
+app.get('/username/:username',
+  ipv4(),  // set IPv4 in req.ipv4
+  redisSet({
+    client,
+    key: (req) => req.path,
+    value: (req, res) => JSON.stringify({ username: req.params.username, ip_address: req.ipv4 }),
+    expiration: 600  // seconds
+  }),
+  (req, res) => {
+    res.status(200).send('Data cached')
   })
 
 app.use((err, req, res, next) => {
