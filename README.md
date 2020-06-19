@@ -1,5 +1,7 @@
 A miscellaneous collection of Express middlewares.
 
+Note: For specific Express middleware wrappers for Redis and MongoDB, visit [@fundaciobit/express-redis-mongo](https://www.npmjs.com/package/@fundaciobit/express-redis-mongo)
+
 ## Middlewares
 
 | middleware         | description                                           |
