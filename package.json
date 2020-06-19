@@ -1,6 +1,6 @@
 {
   "name": "@fundaciobit/express-middleware",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Some useful Express middlewares.",
   "author": "Esteve Lladó <ellado@fundaciobit.org>",
   "main": "index.js",
@@ -14,8 +14,12 @@
   "keywords": [
     "express",
     "middleware",
-    "ip-address",
-    "ipv4"
+    "ip address",
+    "ipv4",
+    "validate",
+    "validator",
+    "json schema",
+    "jsonschema"
   ],
   "engines": {
     "node": ">=4.6.0"
