@@ -47,6 +47,7 @@ describe('Testing validateJsonSchema middleware...', () => {
     })
     middleware(req, res, err => {
       expect(err).toBeDefined()
+      expect(err.name).toBe('BadRequestError')
       done()
     })
   })

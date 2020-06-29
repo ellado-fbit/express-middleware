@@ -1,6 +1,6 @@
 {
   "name": "@fundaciobit/express-middleware",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "description": "Some useful Express middlewares.",
   "author": "Esteve Lladó <ellado@fundaciobit.org>",
   "main": "index.js",
@@ -34,5 +34,7 @@
     "url": "https://github.com/ellado-fbit/express-middleware/issues"
   },
   "homepage": "https://github.com/ellado-fbit/express-middleware#readme",
-  "dependencies": {}
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  }
 }

@@ -4,6 +4,7 @@
 
 const Ajv = require('ajv')
 const ajv = new Ajv({ allErrors: true })
+const BadRequestError = require('../errors/errors').BadRequestError
 
 const validateJsonSchema = (props) => {
   return (req, res, next) => {
@@ -13,7 +14,7 @@ const validateJsonSchema = (props) => {
 
     try {
       const validate = ajv.compile(schema)
-      if (!validate(instanceToValidate(req))) throw new Error(JSON.stringify(validate.errors, null, 2))
+      if (!validate(instanceToValidate(req))) throw new BadRequestError(JSON.stringify(validate.errors, null, 2))
 
       next()
 
