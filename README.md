@@ -82,7 +82,7 @@ app.listen(port, () => { console.log(`Server running on port ${port}...`) })
 
 ## `verifyJWT`
 
-Middleware to verify a JSON Web Token. The decoded token payload will be available on the request via the `user` property. The token is extracted from the 'authorization' header (as a bearer token), or through the 'token' query parameter passed to the endpoint URL (?token=xxx).
+Middleware to verify a JSON Web Token. The decoded token payload will be available on the request via the `user` property. The token is extracted from the `authorization` header (as a bearer token), or through the `token` query parameter passed to the endpoint URL ( `?token=xxx` ).
 
 ```js
 const express = require('express')
