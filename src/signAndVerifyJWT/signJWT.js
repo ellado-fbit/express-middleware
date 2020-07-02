@@ -31,7 +31,7 @@ const signJWT = (props) => {
 
       jwt.sign(payload(req), secret, signOptions, (err, token) => {
         if (err) {
-          throw new Error('Unable to sign token')
+          throw new Error(err.message)
         } else {
           req.token = token
           next()
