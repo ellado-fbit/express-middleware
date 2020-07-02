@@ -2,7 +2,7 @@ const ipv4 = require('../src/ipv4/ipv4')
 
 describe('Testing ipv4 middleware...', () => {
 
-  test(`(Check error) req.ip not detected as a string`, done => {
+  test(`(check error) req.ip not detected as a string`, done => {
     const req = { ip: 100 }
     const res = {}
     const middleware = ipv4()

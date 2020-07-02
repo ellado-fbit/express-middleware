@@ -26,7 +26,7 @@ describe('Testing validateJsonSchema middleware...', () => {
     })
   })
 
-  test(`Validate invalid instance`, done => {
+  test(`(check error) Validate invalid instance`, done => {
     const req = { body: {
       name: 'esteve',
       city: 'palma'
@@ -48,6 +48,21 @@ describe('Testing validateJsonSchema middleware...', () => {
     middleware(req, res, err => {
       expect(err).toBeDefined()
       expect(err.name).toBe('BadRequestError')
+      done()
+    })
+  })
+
+  test(`(check error) Compile invalid schema`, done => {
+    const req = { body: {} }
+    const res = {}
+    const middleware = validateJsonSchema({
+      schema: '',  // invalid schema
+      instanceToValidate: (req) => req.body
+    })
+    middleware(req, res, err => {
+      expect(err).toBeDefined()
+      expect(err.name).toBe('Error')
+      expect(err.message).toMatch(/schema should be object or boolean/)
       done()
     })
   })

@@ -1,6 +1,6 @@
 {
   "name": "@fundaciobit/express-middleware",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "Some useful Express middlewares.",
   "author": "Esteve Lladó <ellado@fundaciobit.org>",
   "main": "index.js",
@@ -19,7 +19,14 @@
     "validate",
     "validator",
     "json schema",
-    "jsonschema"
+    "jsonschema",
+    "jwt",
+    "json web token",
+    "jsonwebtoken",
+    "authentication",
+    "auth",
+    "sign",
+    "verify"
   ],
   "engines": {
     "node": ">=4.6.0"

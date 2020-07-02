@@ -11,6 +11,7 @@ A miscellaneous collection of Express middlewares.
 | ipv4               | Extracts IP address and converts IPv6 format to IPv4. |
 | validateJsonSchema | Validates an instance with a provided JSON Schema.    |
 | verifyJWT          | Verify a JSON Web Token.                              |
+| signJWT            | Sign a JSON Web Token.                                |
 
 ## Install
 
@@ -50,9 +51,12 @@ Middleware to validate the structure of an instance with the provided JSON Schem
 
 ```js
 const express = require('express')
+const bodyParser = require('body-parser')
 const { validateJsonSchema } = require('@fundaciobit/express-middleware')
 
 const app = express()
+
+app.use(bodyParser.json())
 
 app.get('/login',
   validateJsonSchema({
@@ -72,7 +76,8 @@ app.get('/login',
   })
 
 app.use((err, req, res, next) => {
-  res.status(500).send(err.toString())
+  if (!err.statusCode) err.statusCode = 500
+  res.status(err.statusCode).send(err.toString())
 })
 
 const port = 3000
@@ -82,7 +87,22 @@ app.listen(port, () => { console.log(`Server running on port ${port}...`) })
 
 ## `verifyJWT`
 
-Middleware to verify a JSON Web Token. The decoded token payload will be available on the request via the `user` property. The token is extracted from the `authorization` header (as a bearer token), or through the `token` query parameter passed to the endpoint URL ( `?token=xxx` ).
+Middleware to verify a JSON Web Token.
+
+The token is extracted from:
+
+* The `Authorization` header as a bearer token ( `Authorization: Bearer AbCdEf123456` ),
+* or through a `token` query parameter passed to the endpoint ( `http://...?token=AbCdEf123456` ).
+
+If the token is verified, then:
+
+* The `isTokenVerified` property is set to `true` on the request,
+* the decoded token payload is also available on the request via the `tokenPayload` property.
+
+If the token is invalid, then:
+
+* The property `isTokenVerified` is set to `false`,
+* the control is passed to the next middleware to manage the authentication error.
 
 ```js
 const express = require('express')
@@ -90,10 +110,63 @@ const { verifyJWT } = require('@fundaciobit/express-middleware')
 
 const app = express()
 
-app.get('/private_path',
+class AuthenticationError extends Error {
+  constructor(message) {
+    super(message)
+    this.name = 'AuthenticationError'
+    this.statusCode = 401
+  }
+}
+
+app.get('/protected',
   verifyJWT({ secret: 'my_secret' }),
   (req, res) => {
-    res.status(200).send('Token verified')
+    const { isTokenVerified } = req
+    if (isTokenVerified) {
+      res.status(200).send('Token verified')
+    } else {
+      throw new AuthenticationError('Invalid token. Forbidden access.')
+    }
+  })
+
+app.use((err, req, res, next) => {
+  if (!err.statusCode) err.statusCode = 500
+  res.status(err.statusCode).send(err.toString())
+})
+
+const port = 3000
+app.listen(port, () => { console.log(`Server running on port ${port}...`) })
+
+```
+
+## `signJWT`
+
+Middleware to sign a JSON Web Token. The signed token will be available on the request via `token` property.
+
+```js
+const express = require('express')
+const bodyParser = require('body-parser')
+const { signJWT } = require('@fundaciobit/express-middleware')
+
+const app = express()
+
+app.use(bodyParser.json())
+
+app.post('/login',
+  // Here include a middleware to verify user credentials from req.body:
+  //  If Ok: set user info in req.user (without password) and call next().
+  //  Else: call next(error) to catch auth error.
+  signJWT({
+    payload: (req) => {
+      username:  req.user.username,
+      role: req.user.role
+    },
+    secret: 'my_secret',
+    signOptions: { expiresIn: '24h' }
+  }),
+  (req, res) => {
+    const { token } = req
+    res.status(200).json({ token })
   })
 
 app.use((err, req, res, next) => {
