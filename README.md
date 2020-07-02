@@ -23,6 +23,8 @@ npm install @fundaciobit/express-middleware
 
 Middleware to extract the IPv4 address from the request object (it converts IPv6 format to IPv4 format). The extracted address will be available on the request via the `ipv4` property.
 
+### Usage
+
 ```js
 const express = require('express')
 const { ipv4 } = require('@fundaciobit/express-middleware')
@@ -48,6 +50,13 @@ app.listen(port, () => { console.log(`Server running on port ${port}...`) })
 ## `validateJsonSchema`
 
 Middleware to validate the structure of an instance with the provided JSON Schema.
+
+### Parameters
+
+* `schema`: (*required*) is a JSON Schema object.
+* `instanceToValidate`: (*required*) is a function with request object as parameter that returns the 'instance' to validate (string, array or object).
+
+### Usage
 
 ```js
 const express = require('express')
@@ -104,6 +113,12 @@ If the token is invalid, then:
 * The property `isTokenVerified` is set to `false`,
 * the control is passed to the next middleware to manage the authentication error.
 
+### Parameters
+
+* `secret`: (*required*) is a string, buffer, or object containing either the secret for HMAC algorithms or the PEM encoded private key for RSA and ECDSA, as described in [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken).
+
+### Usage
+
 ```js
 const express = require('express')
 const { verifyJWT } = require('@fundaciobit/express-middleware')
@@ -142,6 +157,14 @@ app.listen(port, () => { console.log(`Server running on port ${port}...`) })
 ## `signJWT`
 
 Middleware to sign a JSON Web Token. The signed token will be available on the request via `token` property.
+
+### Parameters
+
+* `payload`: (*required*) is a function with request object as parameter that returns an object literal, buffer or string representing valid JSON.
+* `secret`: (*required*) is a string, buffer, or object containing either the secret for HMAC algorithms or the PEM encoded private key for RSA and ECDSA, as described in [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken).
+* `signOptions`: (*optional*) is an object with extra info to encode, as described in [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken). `Eg: { expiresIn: '24h' }`
+
+### Usage
 
 ```js
 const express = require('express')
