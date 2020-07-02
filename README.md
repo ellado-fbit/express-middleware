@@ -98,7 +98,7 @@ app.listen(port, () => { console.log(`Server running on port ${port}...`) })
 
 Middleware to verify a JSON Web Token.
 
-The token is extracted from:
+The token to verify is extracted from (two options):
 
 * The `Authorization` header as a bearer token ( `Authorization: Bearer AbCdEf123456` ),
 * or through a `token` query parameter passed to the endpoint ( `http://...?token=AbCdEf123456` ).
@@ -106,7 +106,8 @@ The token is extracted from:
 If the token is verified, then:
 
 * The `isTokenVerified` property is set to `true` on the request,
-* the decoded token payload is also available on the request via the `tokenPayload` property.
+* the decoded token payload is also available on the request via the `tokenPayload` property,
+* the control is passed to the next middleware
 
 If the token is invalid, then:
 
