@@ -180,10 +180,10 @@ app.post('/login',
   //  If Ok: set user info in req.user (without password) and call next().
   //  Else: call next(error) to catch auth error.
   signJWT({
-    payload: (req) => {
+    payload: (req) => ({
       username:  req.user.username,
       role: req.user.role
-    },
+    }),
     secret: 'my_secret',
     signOptions: { expiresIn: '24h' }
   }),
