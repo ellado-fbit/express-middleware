@@ -1,18 +1,17 @@
 'use strict'
 
-// Middleware to verify a JSON Web Token. The token is extracted from (two options):
+// Middleware to verify a JSON Web Token.
+
+// The token to verify is extracted from (two options):
 // - The `Authorization` header as a bearer token ( `Authorization: Bearer AbCdEf123456` ),
-// - Through a `token` query parameter passed to the endpoint ( `http://...?token=AbCdEf123456` ).
-//
-// If the token is verified, then:
-// - The `isTokenVerified` property is set to `true` on the request,
-// - The decoded token payload is also available on the request via the `tokenPayload` property.
-//
-// If the token is invalid, then:
-// - The property `isTokenVerified` is set to `false`,
-// - The control is passed to the next middleware to manage the authentication error.
+// - or through a `token` query parameter passed to the endpoint ( `http://...?token=AbCdEf123456` ).
+
+// If the token is verified, then the decoded token payload is available on the request via the
+// `tokenPayload` property, and the control is passed to the next middleware.
 
 const jwt = require('jsonwebtoken')
+const RequiredTokenError  = require('../errors/errors').RequiredTokenError
+const InvalidTokenError  = require('../errors/errors').InvalidTokenError
 
 const verifyJWT = (props) => {
   return (req, res, next) => {
@@ -32,17 +31,15 @@ const verifyJWT = (props) => {
 
         jwt.verify(token, secret, (err, tokenPayload) => {
           if (err) {
-            req.isTokenVerified = false
+            throw new InvalidTokenError('Invalid token')
           } else {
-            req.isTokenVerified = true
             req.tokenPayload = tokenPayload
           }
           next()
         })
 
       } else {
-        req.isTokenVerified = false
-        next()
+        throw new RequiredTokenError('Token is required')
       }
 
     } catch (error) {

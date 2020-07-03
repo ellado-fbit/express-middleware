@@ -32,7 +32,6 @@ describe('Testing signJWT and verifyJWT middlewares...', () => {
 
     middleware(req, res, err => {
       expect(err).toBeUndefined()
-      expect(req.isTokenVerified).toBe(true)
       expect(req.tokenPayload.username).toBe('ellado')
       expect(req.tokenPayload.role).toBe('admin')
       done()
@@ -46,7 +45,6 @@ describe('Testing signJWT and verifyJWT middlewares...', () => {
 
     middleware(req, res, err => {
       expect(err).toBeUndefined()
-      expect(req.isTokenVerified).toBe(true)
       expect(req.tokenPayload.username).toBe('ellado')
       expect(req.tokenPayload.role).toBe('admin')
       done()
@@ -57,8 +55,9 @@ describe('Testing signJWT and verifyJWT middlewares...', () => {
     const middleware = verifyJWT({ secret: 'bad_secret' })
 
     middleware(req, res, err => {
-      expect(err).toBeUndefined()
-      expect(req.isTokenVerified).toBe(false)
+      expect(err).toBeDefined()
+      expect(err.name).toBe('InvalidTokenError')
+      expect(err.message).toMatch(/Invalid token/)
       done()
     })
   })
@@ -69,8 +68,9 @@ describe('Testing signJWT and verifyJWT middlewares...', () => {
     const middleware = verifyJWT({ secret })
 
     middleware(req, res, err => {
-      expect(err).toBeUndefined()
-      expect(req.isTokenVerified).toBe(false)
+      expect(err).toBeDefined()
+      expect(err.name).toBe('InvalidTokenError')
+      expect(err.message).toMatch(/Invalid token/)
       done()
     })
   })
@@ -81,8 +81,9 @@ describe('Testing signJWT and verifyJWT middlewares...', () => {
     const middleware = verifyJWT({ secret })
 
     middleware(req, res, err => {
-      expect(err).toBeUndefined()
-      expect(req.isTokenVerified).toBe(false)
+      expect(err).toBeDefined()
+      expect(err.name).toBe('RequiredTokenError')
+      expect(err.message).toMatch(/Token is required/)
       done()
     })
   })
