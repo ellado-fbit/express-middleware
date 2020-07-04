@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.7] - 2020-07-04
+
+### Changed
+
+- The error message thrown when a token is invalid (verifyJWT).
+
 ## [1.6.6] - 2020-07-03
 
 ### Added

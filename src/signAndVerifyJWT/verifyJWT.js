@@ -1,8 +1,6 @@
 'use strict'
 
-// Middleware to verify a JSON Web Token.
-
-// The token to verify is extracted from (two options):
+// Middleware to verify a JSON Web Token. The token to verify is extracted from:
 // - The `Authorization` header as a bearer token ( `Authorization: Bearer AbCdEf123456` ),
 // - or through a `token` query parameter passed to the endpoint ( `http://...?token=AbCdEf123456` ).
 
@@ -31,11 +29,11 @@ const verifyJWT = (props) => {
 
         jwt.verify(token, secret, (err, tokenPayload) => {
           if (err) {
-            throw new InvalidTokenError('Invalid token')
+            throw new InvalidTokenError(`Invalid token, ${err.message}`)
           } else {
             req.tokenPayload = tokenPayload
+            next()
           }
-          next()
         })
 
       } else {

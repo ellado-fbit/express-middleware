@@ -103,9 +103,7 @@ app.listen(port, () => { console.log(`Server running on port ${port}...`) })
 
 ## `verifyJWT`
 
-Middleware to verify a JSON Web Token.
-
-The token to verify is extracted from (two options):
+Middleware to verify a JSON Web Token. The token to verify is extracted from:
 
 - The `Authorization` header as a bearer token ( `Authorization: Bearer AbCdEf123456` ),
 - or through a `token` query parameter passed to the endpoint ( `http://...?token=AbCdEf123456` ).
