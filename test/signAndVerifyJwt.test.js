@@ -57,7 +57,6 @@ describe('Testing signJWT and verifyJWT middlewares...', () => {
     middleware(req, res, err => {
       expect(err).toBeDefined()
       expect(err.name).toBe('InvalidTokenError')
-      expect(err.message).toMatch(/Invalid token/)
       done()
     })
   })
@@ -70,7 +69,6 @@ describe('Testing signJWT and verifyJWT middlewares...', () => {
     middleware(req, res, err => {
       expect(err).toBeDefined()
       expect(err.name).toBe('InvalidTokenError')
-      expect(err.message).toMatch(/Invalid token/)
       done()
     })
   })
@@ -105,18 +103,7 @@ describe('Testing signJWT and verifyJWT middlewares...', () => {
     middleware(req, res, err => {
       expect(err).toBeDefined()
       expect(err.name).toBe('Error')
-      expect(err.message).toMatch(/parameter is required/)
-      done()
-    })
-  })
-
-  test(`(check error) 'payload' parameter must be a function in signJWT`, done => {
-    const middleware = signJWT({ payload: 'payload' })
-
-    middleware(req, res, err => {
-      expect(err).toBeDefined()
-      expect(err.name).toBe('Error')
-      expect(err.message).toMatch(/must be a function/)
+      expect(err.message).toMatch(/'payload' parameter is required/)
       done()
     })
   })
@@ -129,7 +116,18 @@ describe('Testing signJWT and verifyJWT middlewares...', () => {
     middleware(req, res, err => {
       expect(err).toBeDefined()
       expect(err.name).toBe('Error')
-      expect(err.message).toMatch(/parameter is required/)
+      expect(err.message).toMatch(/'secret' parameter is required/)
+      done()
+    })
+  })
+
+  test(`(check error) 'payload' parameter must be a function in signJWT`, done => {
+    const middleware = signJWT({ payload: 'payload', secret })
+
+    middleware(req, res, err => {
+      expect(err).toBeDefined()
+      expect(err.name).toBe('Error')
+      expect(err.message).toMatch(/'payload' must be a function/)
       done()
     })
   })

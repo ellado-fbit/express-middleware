@@ -16,11 +16,11 @@ const validateJsonSchema = (props) => {
       const validate = ajv.compile(schema)
       if (!validate(instanceToValidate(req))) throw new BadRequestError(JSON.stringify(validate.errors, null, 2))
 
-      next()
+      return next()
 
     } catch (error) {
       error.message = `[validateJsonSchema] ${error.message}`
-      next(error)
+      return next(error)
     }
 
   }

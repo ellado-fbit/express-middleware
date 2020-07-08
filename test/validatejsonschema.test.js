@@ -28,8 +28,8 @@ describe('Testing validateJsonSchema middleware...', () => {
 
   test(`(check error) Validate invalid instance`, done => {
     const req = { body: {
-      name: 'esteve',
-      city: 'palma'
+      nombre: 'esteve',
+      ciudad: 'palma'
     } }
     const res = {}
     const middleware = validateJsonSchema({
@@ -48,6 +48,13 @@ describe('Testing validateJsonSchema middleware...', () => {
     middleware(req, res, err => {
       expect(err).toBeDefined()
       expect(err.name).toBe('BadRequestError')
+      const errMessage = JSON.parse(err.message.replace('[validateJsonSchema] ', ''))
+      expect(errMessage.length).toBe(5)
+      expect(errMessage[0].message).toMatch(/should NOT have additional properties/)
+      expect(errMessage[1].message).toMatch(/should NOT have additional properties/)
+      expect(errMessage[2].message).toMatch(/should have required property 'name'/)
+      expect(errMessage[3].message).toMatch(/should have required property 'surname'/)
+      expect(errMessage[4].message).toMatch(/should have required property 'city'/)
       done()
     })
   })

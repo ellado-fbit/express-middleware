@@ -15,35 +15,32 @@ const verifyJWT = (props) => {
   return (req, res, next) => {
 
     const secret = props.secret
+    let token = null
 
     try {
-      if (!secret) {
-        throw new Error(`'secret' parameter is required`)
-      }
+      if (!secret) throw new Error(`'secret' parameter is required`)
 
-      let token = null
       if (req.query.token) token = req.query.token
       if (req.headers.authorization) token = req.headers.authorization.replace('Bearer ', '')
-
-      if (token) {
-
-        jwt.verify(token, secret, (err, tokenPayload) => {
-          if (err) {
-            throw new InvalidTokenError(`Invalid token, ${err.message}`)
-          } else {
-            req.tokenPayload = tokenPayload
-            next()
-          }
-        })
-
-      } else {
-        throw new RequiredTokenError('Token is required')
-      }
+      if (!token) throw new RequiredTokenError('Token is required')
 
     } catch (error) {
       error.message = `[verifyJWT] ${error.message}`
-      next(error)
+      return next(error)
     }
+
+    jwt.verify(token, secret, (err, tokenPayload) => {
+      try {
+        if (err) throw new InvalidTokenError(err.message)
+
+        req.tokenPayload = tokenPayload
+        return next()
+
+      } catch (error) {
+        error.message = `[verifyJWT] ${error.message}`
+        return next(error)
+      }
+    })
 
   }
 }

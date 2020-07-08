@@ -61,7 +61,7 @@ Middleware to validate the structure of an instance with the provided JSON Schem
 ### Parameters
 
 - `schema`: (*required*) is a JSON Schema object.
-- `instanceToValidate`: (*required*) is a function that accepts the request object as parameter that returns the 'instance' to validate (string, array or object).
+- `instanceToValidate`: (*required*) is a function that accepts the request object as parameter, that returns the 'instance' to validate (string, array or object).
 
 ### Usage
 
@@ -105,8 +105,8 @@ app.listen(port, () => { console.log(`Server running on port ${port}...`) })
 
 Middleware to verify a JSON Web Token. The token to verify is extracted from:
 
-- The `Authorization` header as a bearer token ( `Authorization: Bearer AbCdEf123456` ),
-- or through a `token` query parameter passed to the endpoint ( `http://...?token=AbCdEf123456` ).
+- the `Authorization` header as a bearer token ( `Authorization: Bearer AbCdEf123456` ),
+- or through a `token` query parameter ( `http://...?token=AbCdEf123456` ).
 
 If the token is verified, then the decoded token payload is available on the request via the `tokenPayload` property, and the control is passed to the next middleware.
 
@@ -144,7 +144,7 @@ Middleware to sign a JSON Web Token. The signed token will be available on the r
 
 ### Parameters
 
-- `payload`: (*required*) is a function that accepts the request object as parameter that returns an object literal, buffer or string representing valid JSON.
+- `payload`: (*required*) is a function that accepts the request object as parameter, that returns an object literal, buffer or string representing valid JSON.
 - `secret`: (*required*) is a string, buffer, or object containing either the secret for HMAC algorithms or the PEM encoded private key for RSA and ECDSA, as described in [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken).
 - `signOptions`: (*optional*) is an object with extra info to encode, as described in [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken). `Eg: { expiresIn: '24h' }`
 

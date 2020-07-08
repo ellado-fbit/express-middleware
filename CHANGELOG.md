@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.8] - 2020-07-08
+
+### Changed
+
+- Included `try..catch` block inside async functions (singJWT and verifyJWT).
+
 ## [1.6.7] - 2020-07-04
 
 ### Changed

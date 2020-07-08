@@ -13,35 +13,27 @@ const signJWT = (props) => {
     const signOptions = props.signOptions ? props.signOptions : {}
 
     try {
-      if (!payload) {
-        throw new Error(`'payload' parameter is required`)
-      }
-
-      if (typeof(payload) !== 'function') {
-        throw new Error(`'payload' parameter must be a function that accepts req object as parameter`)
-      }
-
-      if (!secret) {
-        throw new Error(`'secret' parameter is required`)
-      }
-
-      if (typeof(signOptions) !== 'object') {
-        throw new Error(`The 'signOptions' parameter must be an object`)
-      }
-
-      jwt.sign(payload(req), secret, signOptions, (err, token) => {
-        if (err) {
-          throw new Error(err.message)
-        } else {
-          req.token = token
-          next()
-        }
-      })
-
+      if (!payload) throw new Error(`'payload' parameter is required`)
+      if (!secret) throw new Error(`'secret' parameter is required`)
+      if (typeof(payload) !== 'function') throw new Error(`'payload' must be a function that accepts request object as parameter`)
+      if (typeof(signOptions) !== 'object') throw new Error(`The 'signOptions' parameter must be an object`)
     } catch (error) {
       error.message = `[signJWT] ${error.message}`
-      next(error)
+      return next(error)
     }
+
+    jwt.sign(payload(req), secret, signOptions, (err, token) => {
+      try {
+        if (err) throw new Error(err.message)
+
+        req.token = token
+        return next()
+
+      } catch (error) {
+        error.message = `[signJWT] ${error.message}`
+        return next(error)
+      }
+    })
 
   }
 }

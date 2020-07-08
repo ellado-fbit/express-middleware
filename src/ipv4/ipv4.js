@@ -14,11 +14,11 @@ const ipv4 = () => {
 
       ipv4 = ipv4.replace('::ffff:', '').replace('::1', '127.0.0.1')
       req.ipv4 = ipv4
-      next()
+      return next()
 
     } catch (error) {
       error.message = `[ipv4] ${error.message}`
-      next(error)
+      return next(error)
     }
 
   }
