@@ -2,11 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.9] - 2020-07-09
+
+### Changed
+
+- Fixed bug in sample code of Readme (validateJsonSchema usage section).
+
+### Added
+
+- Added a new example in example/example-validateJsonSchema.js
+
 ## [1.6.8] - 2020-07-08
 
 ### Changed
 
-- Included `try..catch` block inside async functions (singJWT and verifyJWT).
+- Included `try..catch` block inside async functions (signJWT and verifyJWT).
 
 ## [1.6.7] - 2020-07-04
 

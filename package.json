@@ -1,6 +1,6 @@
 {
   "name": "@fundaciobit/express-middleware",
-  "version": "1.6.8",
+  "version": "1.6.9",
   "description": "A miscellaneous collection of Express middlewares.",
   "author": "Esteve Lladó <ellado@fundaciobit.org>",
   "main": "index.js",

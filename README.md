@@ -74,7 +74,7 @@ const app = express()
 
 app.use(bodyParser.json())
 
-app.get('/login',
+app.post('/login',
   validateJsonSchema({
     schema: {
       type: 'object',
