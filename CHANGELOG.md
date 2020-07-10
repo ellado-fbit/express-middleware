@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0] - 2020-07-10
+
+### Added
+
+- Added a new middleware to parse string properties of an object into numbers (integers or floats) or booleans (parseTypes).
+
 ## [1.6.9] - 2020-07-09
 
 ### Changed
@@ -10,7 +16,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Added a new example in example/example-validateJsonSchema.js
+- Added a new example in examples/example-validateJsonSchema.js
 
 ## [1.6.8] - 2020-07-08
 

@@ -9,6 +9,7 @@ A miscellaneous collection of Express middlewares.
 | middleware         | description                                           |
 |--------------------|-------------------------------------------------------|
 | ipv4               | Extracts IP address and converts IPv6 format to IPv4. |
+| parseTypes         | Parses string properties into numbers or booleans.    |
 | validateJsonSchema | Validates an instance with a provided JSON Schema.    |
 | verifyJWT          | Verify a JSON Web Token.                              |
 | signJWT            | Sign a JSON Web Token.                                |
@@ -22,6 +23,7 @@ npm install @fundaciobit/express-middleware
 ## Index
 
 - [`ipv4`](#ipv4)
+- [`parseTypes`](#parsetypes)
 - [`validateJsonSchema`](#validatejsonschema)
 - [`verifyJWT`](#verifyjwt)
 - [`signJWT`](#signjwt)
@@ -51,6 +53,43 @@ app.use((err, req, res, next) => {
 
 const port = 3000
 app.listen(port, () => { console.log(`Server running on port ${port}...`) })
+
+```
+
+## `parseTypes`
+
+Middleware to convert string properties of an object to numbers (integers or floats) or booleans. The provided object will not be mutated. The copied and parsed object will be available on the request via `parsedObject` property.
+
+### Parameters
+
+- `objectToParse`: (*required*) Function that accepts the request object as parameter, that returns the object to parse.
+- `properties`: (*optional*) Array of properties. If not provided, the conversion is applied to all properties of the object.
+
+### Usage
+
+```js
+const express = require('express')
+const { parseTypes } = require('@fundaciobit/express-middleware')
+
+const app = express()
+
+app.get('/users/min_age/:min_age/max_age/:max_age/is_employee/:is_employee/min_salary/:min_salary/max_salary/:max_salary',
+  parseTypes({
+    objectToParse: (req) => req.params
+  }),
+  (req, res) => {
+    const { params, parsedObject } = req
+    res.json({ params, parsedObject })
+  })
+
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  if (!err.statusCode) err.statusCode = 500
+  res.status(err.statusCode).send(err.toString())
+})
+
+const port = 3000
+app.listen(3000, () => { console.log(`Server running on port ${port}...`) })
 
 ```
 
