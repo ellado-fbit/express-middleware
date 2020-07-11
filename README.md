@@ -63,7 +63,7 @@ Middleware to convert string properties of an object to numbers (integers or flo
 ### Parameters
 
 - `objectToParse`: (*required*) Function that accepts the request object as parameter, that returns the object to parse.
-- `properties`: (*optional*) Array of properties. If not provided, the conversion is applied to all properties of the object.
+- `properties`: (*optional*) Array of properties to parse. If not provided, the conversion is applied to all properties of the object.
 
 ### Usage
 

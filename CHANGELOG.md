@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.1] - 2020-07-11
+
+### Changed
+
+- Fixed bug: applied trim() to avoid conversion of Number('   ') to 0 (parseTypes). Empty string properties are not parsed.
+
 ## [1.7.0] - 2020-07-10
 
 ### Added

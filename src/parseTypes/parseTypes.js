@@ -6,7 +6,7 @@
 
 // Parameters:
 //  objectToParse: (required) Function that accepts the request object as parameter, that returns the object to parse.
-//  properties: (optional) Array of strings. If not provided, the conversion is applied to all properties of the object.
+//  properties: (optional) Array of properties to parse. If not provided, the conversion is applied to all properties of the object.
 
 const parseTypes = (props) => {
   return (req, res, next) => {
@@ -28,7 +28,7 @@ const parseTypes = (props) => {
     properties = properties ? properties : Object.keys(objectToParse)
 
     properties.forEach(key => {
-      if (objectToParse[key] && typeof objectToParse[key] === 'string') {
+      if (objectToParse[key] && typeof objectToParse[key] === 'string' && objectToParse[key].trim() !== '') {
         if (objectToParse[key].toLowerCase().trim() === 'true') {
           objectToParse[key] = true
         } else if (objectToParse[key].toLowerCase().trim() === 'false') {
