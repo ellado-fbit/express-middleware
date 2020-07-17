@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.2] - 2020-07-17
+
+### Changed
+
+- Fixed bug: applied trim() to token extraction (verifyJWT).
+
 ## [1.7.1] - 2020-07-11
 
 ### Changed

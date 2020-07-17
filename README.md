@@ -79,10 +79,9 @@ app.get('/users/min_age/:min_age/max_age/:max_age/is_employee/:is_employee/min_s
   }),
   (req, res) => {
     const { params, parsedObject } = req
-    res.json({ params, parsedObject })
+    res.status(200).json({ params, parsedObject })
   })
 
-// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   if (!err.statusCode) err.statusCode = 500
   res.status(err.statusCode).send(err.toString())

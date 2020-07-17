@@ -20,8 +20,8 @@ const verifyJWT = (props) => {
     try {
       if (!secret) throw new Error(`'secret' parameter is required`)
 
-      if (req.query.token) token = req.query.token
-      if (req.headers.authorization) token = req.headers.authorization.replace('Bearer ', '')
+      if (req.query.token) token = req.query.token.trim()
+      if (req.headers.authorization) token = req.headers.authorization.replace('Bearer ', '').trim()
       if (!token) throw new RequiredTokenError('Token is required')
 
     } catch (error) {

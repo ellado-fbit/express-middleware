@@ -38,8 +38,33 @@ describe('Testing signJWT and verifyJWT middlewares...', () => {
     })
   })
 
+  test(`Verify JSON Web Token via req.query.token (with white spaces)`, done => {
+    req.query.token = `   ${req.token}   `
+    const middleware = verifyJWT({ secret })
+
+    middleware(req, res, err => {
+      expect(err).toBeUndefined()
+      expect(req.tokenPayload.username).toBe('ellado')
+      expect(req.tokenPayload.role).toBe('admin')
+      done()
+    })
+  })
+
   test(`Verify JSON Web Token via bearer token`, done => {
     req.headers.authorization = `Bearer ${req.token}`
+    delete req.query.token
+    const middleware = verifyJWT({ secret })
+
+    middleware(req, res, err => {
+      expect(err).toBeUndefined()
+      expect(req.tokenPayload.username).toBe('ellado')
+      expect(req.tokenPayload.role).toBe('admin')
+      done()
+    })
+  })
+
+  test(`Verify JSON Web Token via bearer token (with white spaces)`, done => {
+    req.headers.authorization = `Bearer    ${req.token}   `
     delete req.query.token
     const middleware = verifyJWT({ secret })
 

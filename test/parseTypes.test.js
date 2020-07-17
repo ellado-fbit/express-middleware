@@ -56,8 +56,8 @@ describe('Testing parseTypes middleware...', () => {
   test(`Parse elements of an array (because arrays are also objects)`, done => {
     const middleware = parseTypes({
       // eslint-disable-next-line no-unused-vars
-      objectToParse: (req) => [null, undefined, '123', 'esteve', '123.45', 'true', 'False'],
-      properties: [0, 1, '2', '6']
+      objectToParse: (req) => [null, undefined, '123', 'esteve', '123.45', 'true', 'False', '', '   '],
+      properties: [0, 1, '2', '6', 7, 8]
     })
     middleware(req, res, err => {
       expect(err).toBeUndefined()
@@ -69,6 +69,8 @@ describe('Testing parseTypes middleware...', () => {
       expect(req.parsedObject[4]).toBe('123.45')
       expect(req.parsedObject[5]).toBe('true')
       expect(req.parsedObject[6]).toBe(false)
+      expect(req.parsedObject[7]).toBe('')
+      expect(req.parsedObject[8]).toBe('   ')
       done()
     })
   })
