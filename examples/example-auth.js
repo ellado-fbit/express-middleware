@@ -31,7 +31,7 @@ const authMiddlewareArray = [
       // Verify HTTP method
       // ...
 
-      res.status(200).json({ autheticated: 'OK', tokenPayload })
+      res.status(200).json({ authenticated: 'OK', tokenPayload })
     } else {
       console.log('Token not provided, proceed with auth via IP address...')
       next()
@@ -49,7 +49,7 @@ const authMiddlewareArray = [
   (req, res) => {
     // Verify HTTP method
     // ...
-    res.status(200).json({ autheticated: 'OK', ip: req.ipv4 })
+    res.status(200).json({ authenticated: 'OK', ip: req.ipv4 })
   }
 ]
 

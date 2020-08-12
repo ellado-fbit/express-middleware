@@ -88,7 +88,7 @@ app.use((err, req, res, next) => {
 })
 
 const port = 3000
-app.listen(3000, () => { console.log(`Server running on port ${port}...`) })
+app.listen(port, () => { console.log(`Server running on port ${port}...`) })
 
 ```
 
