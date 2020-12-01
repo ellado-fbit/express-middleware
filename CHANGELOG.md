@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.3] - 2020-12-01
+
+### Changed
+
+- Replaced spread syntax to copy object with Object.assign syntax in `parseTypes.js`.
+
 ## [1.7.3] - 2020-08-12
 
 ### Changed
