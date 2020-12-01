@@ -24,7 +24,9 @@ const parseTypes = (props) => {
       return next(error)
     }
 
-    objectToParse = { ...objectToParse(req) }
+    // objectToParse = { ...objectToParse(req) }
+    objectToParse = Object.assign({}, objectToParse(req))
+
     properties = properties ? properties : Object.keys(objectToParse)
 
     properties.forEach(key => {
