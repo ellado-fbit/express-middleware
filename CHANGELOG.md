@@ -2,11 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.5] - 2020-12-02
+
+### Changed
+
+- Replaced `Object.assign` (shallow copy) in `parseTypes.js` by `JSON.parse(JSON.stringify(objectToParse(req)))` (deep copy).
+
 ## [1.7.4] - 2020-12-01
 
 ### Changed
 
-- Replaced spread syntax to copy object with Object.assign syntax in `parseTypes.js`.
+- Replaced spread syntax by Object.assign syntax in `parseTypes.js`.
 
 ## [1.7.3] - 2020-08-12
 

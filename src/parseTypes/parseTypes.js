@@ -24,9 +24,7 @@ const parseTypes = (props) => {
       return next(error)
     }
 
-    // objectToParse = { ...objectToParse(req) }
-    objectToParse = Object.assign({}, objectToParse(req))
-
+    objectToParse = JSON.parse(JSON.stringify(objectToParse(req)))
     properties = properties ? properties : Object.keys(objectToParse)
 
     properties.forEach(key => {
