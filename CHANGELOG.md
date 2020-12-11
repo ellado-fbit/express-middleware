@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.6] - 2020-12-11
+
+### Changed
+
+- Fixed bug: Removed the `allErrors` option passed to the Ajv validator because a reported security vulnerability ( https://nvd.nist.gov/vuln/detail/CVE-2020-8192 ).
+
 ## [1.7.5] - 2020-12-02
 
 ### Changed

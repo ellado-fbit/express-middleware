@@ -3,7 +3,7 @@
 // Middleware to validate the structure of an instance with the provided JSON Schema
 
 const Ajv = require('ajv')
-const ajv = new Ajv({ allErrors: true })
+const ajv = new Ajv()
 const BadRequestError = require('../errors/errors').BadRequestError
 
 const validateJsonSchema = (props) => {
