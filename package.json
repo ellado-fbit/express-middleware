@@ -44,6 +44,6 @@
   "homepage": "https://github.com/ellado-fbit/express-middleware#readme",
   "dependencies": {
     "ajv": "^6.12.2",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^9.0.0"
   }
 }
