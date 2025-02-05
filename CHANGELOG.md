@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.7] - 2025-02-05
+
+### Changed
+
+- Updated dependencies: `jsonwebtoken` to ^9.0.0, `jest` to ^29.7.0.
+
 ## [1.7.6] - 2020-12-11
 
 ### Changed
